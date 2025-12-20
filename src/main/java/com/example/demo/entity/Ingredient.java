@@ -38,5 +38,5 @@ public class Ingredient {
         updatedAt = LocalDateTime.now();
     }
 
-    // 👉 Generate getters and setters
+    
 }
