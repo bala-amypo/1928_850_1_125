@@ -38,16 +38,23 @@ public class ProfitCalculationServiceImpl implements ProfitCalculationService {
         }
         
         BigDecimal totalCost = BigDecimal.ZERO;
-        for (RecipeIngredient ri : ingredients) {
-            BigDecimal ingredientCost = ri.getIngredient().getCostPerUnit()
-                .multiply(BigDecimal.valueOf(ri.getQuantityRequired()));
-            totalCost = totalCost.add(ingredientCost);
-        }
-        
-        Double profitMargin = menuItem.getSellingPrice().subtract(totalCost).doubleValue();
-        
-        ProfitCalculationRecord record = new ProfitCalculationRecord(menuItem, totalCost, profitMargin);
-        return profitCalculationRecordRepository.save(record);
+
+for (RecipeIngredient ri : ingredients) {
+    BigDecimal costPerUnit =
+            BigDecimal.valueOf(ri.getIngredient().getCostPerUnit());
+
+    BigDecimal quantity =
+            BigDecimal.valueOf(ri.getQuantityRequired());
+
+    totalCost = totalCost.add(costPerUnit.multiply(quantity));
+}
+
+BigDecimal sellingPrice =
+        BigDecimal.valueOf(menuItem.getSellingPrice());
+
+Double profitMargin =
+        sellingPrice.subtract(totalCost).doubleValue();
+
     }
     
     @Override
