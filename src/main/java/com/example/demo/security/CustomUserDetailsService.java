@@ -4,6 +4,9 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.entity.User;
 import org.springframework.security.core.userdetails.*;
 import java.util.*;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class CustomUserDetailsService implements UserDetailsService {
 
