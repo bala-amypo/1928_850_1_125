@@ -1,48 +1,42 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.RecipeIngredient;
-import com.example.demo.service.RecipeIngredientService;
+import com.example.demo.entity.ProfitCalculationRecord;
+import com.example.demo.service.ProfitCalculationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/recipe-ingredients")
-public class RecipeIngredientController {
-    private final RecipeIngredientService recipeIngredientService;
+@RequestMapping("/api/profit")
+public class ProfitCalculationController {
+    private final ProfitCalculationService profitCalculationService;
     
-    public RecipeIngredientController(RecipeIngredientService recipeIngredientService) {
-        this.recipeIngredientService = recipeIngredientService;
+    public ProfitCalculationController(ProfitCalculationService profitCalculationService) {
+        this.profitCalculationService = profitCalculationService;
     }
     
-    @PostMapping
-    public ResponseEntity<RecipeIngredient> addIngredientToMenuItem(@RequestBody RecipeIngredient recipeIngredient) {
-        RecipeIngredient created = recipeIngredientService.addIngredientToMenuItem(recipeIngredient);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    @PostMapping("/calculate/{menuItemId}")
+    public ResponseEntity<ProfitCalculationRecord> calculateProfit(@PathVariable Long menuItemId) {
+        ProfitCalculationRecord record = profitCalculationService.calculateProfit(menuItemId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(record);
     }
     
-    @PutMapping("/{id}")
-    public ResponseEntity<RecipeIngredient> updateRecipeIngredient(@PathVariable Long id, @RequestBody Double quantity) {
-        RecipeIngredient updated = recipeIngredientService.updateRecipeIngredient(id, quantity);
-        return ResponseEntity.ok(updated);
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfitCalculationRecord> getCalculationById(@PathVariable Long id) {
+        ProfitCalculationRecord record = profitCalculationService.getCalculationById(id);
+        return ResponseEntity.ok(record);
     }
     
     @GetMapping("/menu-item/{menuItemId}")
-    public ResponseEntity<List<RecipeIngredient>> getIngredientsByMenuItem(@PathVariable Long menuItemId) {
-        List<RecipeIngredient> ingredients = recipeIngredientService.getIngredientsByMenuItem(menuItemId);
-        return ResponseEntity.ok(ingredients);
+    public ResponseEntity<List<ProfitCalculationRecord>> getCalculationsForMenuItem(@PathVariable Long menuItemId) {
+        List<ProfitCalculationRecord> records = profitCalculationService.getCalculationsForMenuItem(menuItemId);
+        return ResponseEntity.ok(records);
     }
     
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> removeIngredientFromRecipe(@PathVariable Long id) {
-        recipeIngredientService.removeIngredientFromRecipe(id);
-        return ResponseEntity.ok().build();
-    }
-    
-    @GetMapping("/ingredient/{ingredientId}/total-quantity")
-    public ResponseEntity<Double> getTotalQuantityOfIngredient(@PathVariable Long ingredientId) {
-        Double totalQuantity = recipeIngredientService.getTotalQuantityOfIngredient(ingredientId);
-        return ResponseEntity.ok(totalQuantity);
+    @GetMapping
+    public ResponseEntity<List<ProfitCalculationRecord>> getAllCalculations() {
+        List<ProfitCalculationRecord> records = profitCalculationService.getAllCalculations();
+        return ResponseEntity.ok(records);
     }
 }

@@ -39,4 +39,4 @@ public class ProfitCalculationController {
         List<ProfitCalculationRecord> records = profitCalculationService.getAllCalculations();
         return ResponseEntity.ok(records);
     }
-}   
+}
