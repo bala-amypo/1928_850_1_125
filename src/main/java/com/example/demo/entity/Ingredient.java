@@ -1,23 +1,18 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import java.math.BigDecimal;
 
 @Entity
-@Getter
-@Setter
 public class Ingredient {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long id;
 
     private String name;
-
     private String unit;
+    private BigDecimal costPerUnit;
+    private Boolean active = true;
 
-    private double costPerUnit;
-
-    private boolean active;
+    // getters & setters
 }
