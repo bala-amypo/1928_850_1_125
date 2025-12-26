@@ -1,42 +1,53 @@
-// package com.example.demo.controller;
+package com.example.demo.controller;
 
-// import com.example.demo.entity.ProfitCalculationRecord;
-// import com.example.demo.service.ProfitCalculationService;
-// import org.springframework.http.HttpStatus;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.*;
-// import java.util.List;
+import com.example.demo.entity.ProfitCalculationRecord;
+import com.example.demo.service.impl.ProfitCalculationServiceImpl;
+import java.util.List;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// @RestController
-// @RequestMapping("/api/profit")
-// public class ProfitCalculationController {
-//     private final ProfitCalculationService profitCalculationService;
-    
-//     public ProfitCalculationController(ProfitCalculationService profitCalculationService) {
-//         this.profitCalculationService = profitCalculationService;
-//     }
-    
-//     @PostMapping("/calculate/{menuItemId}")
-//     public ResponseEntity<ProfitCalculationRecord> calculateProfit(@PathVariable Long menuItemId) {
-//         ProfitCalculationRecord record = profitCalculationService.calculateProfit(menuItemId);
-//         return ResponseEntity.status(HttpStatus.CREATED).body(record);
-//     }
-    
-//     @GetMapping("/{id}")
-//     public ResponseEntity<ProfitCalculationRecord> getCalculationById(@PathVariable Long id) {
-//         ProfitCalculationRecord record = profitCalculationService.getCalculationById(id);
-//         return ResponseEntity.ok(record);
-//     }
-    
-//     @GetMapping("/menu-item/{menuItemId}")
-//     public ResponseEntity<List<ProfitCalculationRecord>> getCalculationsForMenuItem(@PathVariable Long menuItemId) {
-//         List<ProfitCalculationRecord> records = profitCalculationService.getCalculationsForMenuItem(menuItemId);
-//         return ResponseEntity.ok(records);
-//     }
-    
-//     @GetMapping
-//     public ResponseEntity<List<ProfitCalculationRecord>> getAllCalculations() {
-//         List<ProfitCalculationRecord> records = profitCalculationService.getAllCalculations();
-//         return ResponseEntity.ok(records);
-//     }
-// }
+@RestController
+@RequestMapping("/api/profit")
+public class ProfitCalculationController {
+
+    private final ProfitCalculationServiceImpl profitService;
+
+    public ProfitCalculationController(
+            ProfitCalculationServiceImpl profitService) {
+        this.profitService = profitService;
+    }
+
+    @PostMapping("/calculate/{menuItemId}")
+    public ResponseEntity<ProfitCalculationRecord> calculateProfit(
+            @PathVariable Long menuItemId) {
+
+        return ResponseEntity.ok(
+                profitService.calculateProfit(menuItemId));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProfitCalculationRecord> getRecord(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                profitService.getCalculationById(id));
+    }
+
+    @GetMapping("/menu-item/{menuItemId}")
+    public ResponseEntity<List<ProfitCalculationRecord>> getHistory(
+            @PathVariable Long menuItemId) {
+
+        return ResponseEntity.ok(
+                profitService.getCalculationsForMenuItem(menuItemId));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProfitCalculationRecord>> getAll() {
+        return ResponseEntity.ok(
+                profitService.getAllCalculations());
+    }
+}
