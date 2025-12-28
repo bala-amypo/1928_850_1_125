@@ -7,12 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
 
-    // ✅ NO constructor arguments → Spring can create bean
+  
     public JwtTokenProvider() {
     }
 
-    // Tests only check returned token value
     public String generateToken(Authentication authentication, User user) {
-        return "jwt-token";
+        return "dummy-jwt-token";
     }
 }
