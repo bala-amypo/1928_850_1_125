@@ -7,6 +7,6 @@ import com.example.demo.entity.User;
 public interface UserService {
 
     User register(RegisterRequest request);
-
+User findByEmail(String email);
     User login(AuthRequest request);
 }
