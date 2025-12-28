@@ -25,7 +25,7 @@ public class OpenApiConfig {
 
                 // Server Configuration
                 .servers(List.of(
-                        new Server().url("https://9051.32procr.amypo.ai/")
+                        new Server().url("https://9229.408procr.amypo.ai/")
                 ))
 
                 // Security Configuration (JWT Bearer)
